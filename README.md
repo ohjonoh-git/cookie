@@ -8,7 +8,7 @@ More info on the framework can be found here https://www.protractortest.org/#/
 You'll notice I have a few files in my repo.
 * conf.js: This contains information/values I set for how my automation will run. This includes global variables such as wait times.
 * cookie-base-page.js: This is where I keep all my page locators (POM) and any functions I write to interact with the page
-* cookie-game.js: This my 'spec' file where I write out the flow of the automation. The important points is that it follows step instructions and correct expected result has been achieved in the "expect" portion
+* cookie-game.js: This my 'spec' file where I write out the flow of the automation. The important points is that it follows step instructions and correct expected result has been achieved in the "expect" portion. I validate grandma upgrade has happened by checking if the second column has the grandma upgrade displayed.
 
 # Installation steps
 * Prerequisite: clone repo

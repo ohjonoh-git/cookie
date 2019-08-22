@@ -17,7 +17,7 @@
      }
 
     /*
-    * Clicks on the cookie button however many times is passed in the index
+    *  Clicks on the cookie button however many times is passed in the index
     */ 
     async clickOnCookie(count) {
         for (let i = 0; i < count; i++) {
@@ -26,7 +26,7 @@
     }
 
     /*
-    * Clicks on the click upgrade button
+    *  Clicks on the click upgrade button
     */
    async clickOnMouseUpgrade() {
         await browser.wait(until.elementToBeClickable(this.mouseClickUpgrade), 5000, 'Mouse Click upgrade not visible');
@@ -34,58 +34,40 @@
         await this.mouseClickUpgrade.click();
    }
 
+   /*
+    *  Obtains the price of the mouse upgrade and then the status of the grandma upgrade.
+    *  It will continue to select the mouse upgrade until grandma is available
+    */
    async clickUntilGrandmaAvailable() {
-        let price = await this.mouseClickUpgradePrice.getText();
-        
         while(true) {
+            let price = await this.mouseClickUpgradePrice.getText();
+            await this.clickOnCookie(price);
             let status = await this.grandmaUpgrade.getAttribute('class');
-            await browser.sleep(2000);
             if (status === 'product unlocked enabled') {
-                await browser.wait(until.elementToBeClickable(this.grandmaUpgrade), 5000, 'Mouse Click upgrade not visible');
-                console.log(status);
                 break;
             }
             else {
-                let price = await this.mouseClickUpgradePrice.getText();
-                console.log(price);
-                await this.clickOnCookie(price);
                 await this.clickOnMouseUpgrade();
-                //await this.recursive();
             } 
         }
     }
 
+    /*
+    *   This is a function trying to obtain the grandma upgrade recursively using the similar method above
+    *   Although it technically works, it selects the mouse upgrade one additional time before the grandma is selected
+    */ 
     async recursive() {
         let status = await this.grandmaUpgrade.getAttribute('class');
-        await browser.sleep(2000);
+        let price = await this.mouseClickUpgradePrice.getText();
+        await this.clickOnCookie(price);
+
         if (status === 'product unlocked enabled') {
-            await browser.wait(until.elementToBeClickable(this.grandmaUpgrade), 5000, 'Mouse Click upgrade not visible');
-            console.log(status);
-            return;
+            return
         }
         else {
-            let price = await this.mouseClickUpgradePrice.getText();
-            console.log(price);
-            await this.clickOnCookie(price);
             await this.clickOnMouseUpgrade();
             await this.recursive();
         } 
-    }
-
-    async checkAndClickOnGrandmaUpgrade() {
-       
-        while(true) {
-            let status = await this.grandmaUpgrade.getAttribute('class');
-            let price = await this.mouseClickUpgradePrice.getText();
-            if(status != 'product unlocked enabled') {
-                await this.cookieButton.click();
-            }
-            else {
-                await this.grandmaUpgrade.click();
-                return false;
-            } 
-        }
-
     }
 
  }

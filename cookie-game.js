@@ -21,8 +21,7 @@ describe('When the user navigates to the cookieclicker page', () => {
         
         await CookiePage.clickUntilGrandmaAvailable();
         await CookiePage.grandmaUpgrade.click();
-        //await CookiePage.checkAndClickOnGrandmaUpgrade();
-        //await browser.sleep(10000);
+
         expect(await CookiePage.grandmaRow.isDisplayed()).toBe(true);
     });
 });

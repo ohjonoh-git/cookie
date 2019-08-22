@@ -16,7 +16,7 @@ describe('When the user navigates to the cookieclicker page', () => {
         await browser.get('https://orteil.dashnet.org/cookieclicker/');
     });
 
-    it('should click on the cookie and buy the basic level of upgrade whenever possible', async () => {
+    it('should click on the cookie and buy the basic level of upgrade whenever possible until grandma has been selected', async () => {
         await browser.wait(until.visibilityOf(CookiePage.mouseClickUpgradePrice), 5000, 'Cookie button was not visible');
         
         await CookiePage.clickUntilGrandmaAvailable();
